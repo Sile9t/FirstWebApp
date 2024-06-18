@@ -27,6 +27,8 @@ namespace FirstWebApp.Data
                 entity.Property(x => x.Name)
                       .HasColumnName("name")
                       .HasMaxLength(255);
+                entity.Property(x => x.Price)
+                      .HasColumnName("price");
                 entity.Property(x => x.Desctiption)
                       .HasColumnName("description")
                       .HasMaxLength(255);
