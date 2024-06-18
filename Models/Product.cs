@@ -8,5 +8,6 @@
         public string Desctiption { get; set; }
         public int? GroupId { get; set; }
         public virtual ProductGroup? Group { get; set; }
+        public virtual List<Storage> Storages { get; set; }
     }
 }
