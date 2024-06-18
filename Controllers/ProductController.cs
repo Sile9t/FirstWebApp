@@ -24,6 +24,15 @@ namespace FirstWebApp.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult<IEnumerable<Product>> GetAllProducts()
+        {
+            using (var context = new StorageContext())
+            {
+                var list = context.Products.Select(x 
+                    => new Product{Name = x.Name, Desctiption = x.Desctiption, Price = x.Price});
 
+                return Ok(list);
+            }
     }
 }
