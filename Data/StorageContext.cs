@@ -5,8 +5,8 @@ namespace FirstWebApp.Data
 {
     public class StorageContext : DbContext
     {
-        private readonly string connection = @"Server=DESKTOP-U893DOI;Database=lessonDatabase;" +
-            "TrustServerCertificate=True;Trusted_Connection=True";
+        private readonly string connection = @"Server=DESKTOP-U893DOI;Initial Catalog = Products;
+            TrustServerCertificate=True;Trusted_Connection=True";
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductGroup> ProductGroups { get; set; }
         public virtual DbSet<Storage> Storages { get; set; }
@@ -30,13 +30,6 @@ namespace FirstWebApp.Data
                 entity.Property(x => x.Desctiption)
                       .HasColumnName("description")
                       .HasMaxLength(255);
-                entity.Property(x => x.GroupId)
-                      .HasColumnName("group_id");
-                entity.Property(x => x.Group)
-                      .HasColumnName("group");
-                entity.Property(x => x.Storages)
-                      .HasColumnName("storages");
-
                 entity.HasOne(x => x.Group)
                       .WithMany(x => x.Products)
                       .HasForeignKey(x => x.GroupId);
@@ -55,8 +48,6 @@ namespace FirstWebApp.Data
                 entity.Property(x => x.Description)
                       .HasColumnName("description")
                       .HasMaxLength(255);
-                entity.Property(x => x.Products)
-                      .HasColumnName("products");
             });
 
             modelBuilder.Entity<Storage>(entity =>
