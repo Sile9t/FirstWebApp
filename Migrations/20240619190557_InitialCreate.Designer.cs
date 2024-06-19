@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FirstWebApp.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20240618151743_InitialCreate")]
+    [Migration("20240619190557_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -53,7 +53,8 @@ namespace FirstWebApp.Migrations
                         .HasColumnName("name");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("price");
 
                     b.HasKey("Id")
                         .HasName("product_pk");

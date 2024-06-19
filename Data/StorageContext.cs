@@ -19,8 +19,8 @@ namespace FirstWebApp.Data
         {
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.HasKey(x => x.Id).HasName("product_pk");
                 entity.ToTable("product");
+                entity.HasKey(x => x.Id).HasName("product_pk");
 
                 entity.Property(x => x.Id)
                       .HasColumnName("id");
@@ -39,8 +39,8 @@ namespace FirstWebApp.Data
 
             modelBuilder.Entity<ProductGroup>(entity =>
             {
-                entity.HasKey(x => x.Id).HasName("product_group_pk");
                 entity.ToTable("product_group");
+                entity.HasKey(x => x.Id).HasName("product_group_pk");
 
                 entity.Property(x => x.Id)
                       .HasColumnName("id");
@@ -54,8 +54,8 @@ namespace FirstWebApp.Data
 
             modelBuilder.Entity<Storage>(entity =>
             {
-                entity.HasKey(x => x.Id).HasName("storage_pk");
                 entity.ToTable("storage");
+                entity.HasKey(x => x.Id).HasName("storage_pk");
 
                 entity.HasOne(x => x.Product)
                       .WithMany(x => x.Storages)
