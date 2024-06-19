@@ -37,5 +37,22 @@ namespace FirstWebApp.Controllers
                 return Ok(list);
             }
         }
+
+        [HttpDelete]
+        public ActionResult<ProductGroup> DeleteProductGroup(int id)
+        {
+            using (var context = new StorageContext())
+            {
+                var group = context.ProductGroups.FirstOrDefault(x => x.Id == id);
+
+                if (group == null)
+                    return StatusCode(409);
+
+                context.ProductGroups.Remove(group);
+                context.SaveChanges();
+
+                return Ok(group);
+            }
+        }
     }
 }
