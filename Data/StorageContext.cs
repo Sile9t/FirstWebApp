@@ -23,7 +23,8 @@ namespace FirstWebApp.Data
                 entity.HasKey(x => x.Id).HasName("product_pk");
 
                 entity.Property(x => x.Id)
-                      .HasColumnName("id");
+                      .HasColumnName("id")
+                      .IsRequired();
                 entity.Property(x => x.Name)
                       .HasColumnName("name")
                       .HasMaxLength(255);
