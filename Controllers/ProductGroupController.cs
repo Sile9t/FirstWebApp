@@ -30,7 +30,9 @@ namespace FirstWebApp.Controllers
         {
             using (var context = new StorageContext())
             {
-                var list = context.ProductGroups.ToList();
+                var list = context.ProductGroups.Select(x 
+                    => new ProductGroup { Id = x.Id, Name = x.Name, 
+                        Description = x.Description}).ToList();
 
                 return Ok(list);
             }

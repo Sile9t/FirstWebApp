@@ -31,8 +31,8 @@ namespace FirstWebApp.Controllers
             using (var context = new StorageContext())
             {
                 list = context.Products.Select(x 
-                    => new Product{Name = x.Name, Desctiption = x.Desctiption,
-                        Price = x.Price}).ToList();
+                    => new Product{ Id = x.Id, Name = x.Name, 
+                        Desctiption = x.Desctiption, Price = x.Price}).ToList();
             }
             return Ok(list);
         }
