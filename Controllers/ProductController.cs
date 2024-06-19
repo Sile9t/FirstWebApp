@@ -27,12 +27,31 @@ namespace FirstWebApp.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Product>> GetAllProducts()
         {
+            List<Product> list;
             using (var context = new StorageContext())
             {
-                var list = context.Products.Select(x 
-                    => new Product{Name = x.Name, Desctiption = x.Desctiption, Price = x.Price});
-
-                return Ok(list);
+                list = context.Products.Select(x 
+                    => new Product{Name = x.Name, Desctiption = x.Desctiption,
+                        Price = x.Price}).ToList();
             }
+            return Ok(list);
+        }
+
+        [HttpDelete]
+        public ActionResult<Product> DeleteProduct(int id)
+        {
+            using (var context = new StorageContext())
+            {
+                var product = context.Products.FirstOrDefault(x => x.Id == id);
+
+                if (product == null) 
+                    return StatusCode(409);
+
+                context.Products.Remove(product);
+                context.SaveChanges();
+
+                return Ok(product);
+            }
+        }
     }
 }
