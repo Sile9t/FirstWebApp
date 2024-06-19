@@ -8,7 +8,7 @@ namespace FirstWebApp.Controllers
     [Route("[controller]")]
     public class ProductGroupController : ControllerBase
     {
-        [HttpGet]
+        [HttpPost]
         public ActionResult AddProductGroup(string name, string description)
         {
             using (var context = new StorageContext())
@@ -22,6 +22,17 @@ namespace FirstWebApp.Controllers
                 context.SaveChanges();
 
                 return Ok(group.Id);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult<List<ProductGroup>> GetAllProductGroups()
+        {
+            using (var context = new StorageContext())
+            {
+                var list = context.ProductGroups.ToList();
+
+                return Ok(list);
             }
         }
     }
