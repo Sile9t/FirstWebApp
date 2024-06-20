@@ -8,7 +8,7 @@ namespace FirstWebApp.Controllers
     [Route("[controller]")]
     public class ProductController : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("add_product")]
         public ActionResult<int> AddProduct(string name, string description, decimal price)
         {
             using (var context = new StorageContext())
@@ -24,7 +24,7 @@ namespace FirstWebApp.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("get_all_products")]
         public ActionResult<IEnumerable<Product>> GetAllProducts()
         {
             List<Product> list;
@@ -37,7 +37,7 @@ namespace FirstWebApp.Controllers
             return Ok(list);
         }
 
-        [HttpDelete]
+        [HttpDelete("delete_product")]
         public ActionResult<Product> DeleteProduct(int id)
         {
             using (var context = new StorageContext())
