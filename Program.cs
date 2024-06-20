@@ -1,4 +1,11 @@
 
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using FirstWebApp.Abstractions;
+using FirstWebApp.Data;
+using FirstWebApp.Mapper;
+using FirstWebApp.Repositories;
+
 namespace FirstWebApp
 {
     public class Program
@@ -13,6 +20,16 @@ namespace FirstWebApp
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddAutoMapper(typeof(MapperProfile));
+
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            builder.Host.ConfigureContainer<ContainerBuilder>(container =>
+            {
+                container.RegisterType<ProductRepository>().As<IProductRepository>();
+                container.RegisterType<ProductGroupRepository>().As<IProductGroupRepository>();
+                container.Register(x => new StorageContext(builder.Configuration.GetConnectionString("db")))
+                    .InstancePerDependency();
+            });
 
             var app = builder.Build();
 
