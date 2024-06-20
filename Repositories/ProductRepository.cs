@@ -31,7 +31,7 @@ namespace FirstWebApp.Repositories
 
         public ProductDto DeleteProduct(int id)
         {
-            throw new NotImplementedException;
+            throw new NotImplementedException();
         }
 
         public IEnumerable<ProductDto> GetAllProducts()
