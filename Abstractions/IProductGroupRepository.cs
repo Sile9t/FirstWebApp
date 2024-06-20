@@ -1,11 +1,11 @@
-﻿using FirstWebApp.Models;
+﻿using FirstWebApp.Dto;
 
 namespace FirstWebApp.Abstractions
 {
     public interface IProductGroupRepository
     {
-        int AddProductGroup();
-        List<ProductGroup> GetAllProductGroups();
-        ProductGroup DeleteProductGroup(int id);
+        int AddProductGroup(ProductGroupDto group);
+        List<ProductGroupDto> GetAllProductGroups();
+        ProductGroupDto DeleteProductGroup(int id);
     }
 }
