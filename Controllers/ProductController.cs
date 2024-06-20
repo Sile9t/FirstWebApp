@@ -1,4 +1,6 @@
-﻿using FirstWebApp.Data;
+﻿using FirstWebApp.Abstractions;
+using FirstWebApp.Data;
+using FirstWebApp.Dto;
 using FirstWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,33 +10,27 @@ namespace FirstWebApp.Controllers
     [Route("[controller]")]
     public class ProductController : ControllerBase
     {
-        [HttpPost("add_product")]
-        public ActionResult<int> AddProduct(string name, string description, decimal price)
+        private readonly IProductRepository _repository;
+
+        public ProductController(IProductRepository repository)
         {
-            using (var context = new StorageContext())
+            _repository = repository;
+        }
+
+        [HttpPost("add_product")]
+        public ActionResult<int> AddProduct(ProductDto product)
+        {
+            try
             {
-                if (context.Products.Any(x => x.Name == name))
-                    return StatusCode(409);
-
-                var product = new Product() {Name = name, Desctiption = description, Price = price };
-
-                context.Products.Add(product);
-                context.SaveChanges();
-                return Ok(product.Id);
+                return Ok(_repository.AddProduct(product));
             }
+            catch (Exception ex) { return StatusCode(409); }
         }
 
         [HttpGet("get_all_products")]
         public ActionResult<IEnumerable<Product>> GetAllProducts()
         {
-            List<Product> list;
-            using (var context = new StorageContext())
-            {
-                list = context.Products.Select(x 
-                    => new Product{ Id = x.Id, Name = x.Name, 
-                        Desctiption = x.Desctiption, Price = x.Price}).ToList();
-            }
-            return Ok(list);
+            return Ok(_repository.GetAllProducts());
         }
 
         [HttpDelete("delete_product")]
