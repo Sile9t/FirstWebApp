@@ -12,7 +12,8 @@ namespace FirstWebApp.Data
 
         public StorageContext()
         {
-            
+            _connection = "Server=DESKTOP-U893DOI;Initial Catalog = Products;" +
+                "TrustServerCertificate = True; Trusted_Connection = True";
         }
 
         public StorageContext(string connection)
@@ -39,7 +40,7 @@ namespace FirstWebApp.Data
                       .HasMaxLength(255);
                 entity.Property(x => x.Price)
                       .HasColumnName("price");
-                entity.Property(x => x.Desctiption)
+                entity.Property(x => x.Description)
                       .HasColumnName("description")
                       .HasMaxLength(255);
                 entity.HasOne(x => x.Group)

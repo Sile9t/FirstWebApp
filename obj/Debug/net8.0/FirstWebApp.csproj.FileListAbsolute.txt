@@ -137,3 +137,7 @@ C:\Projects\ASP.NET CORE\FirstWebApp\FirstWebApp\obj\Debug\net8.0\refint\FirstWe
 C:\Projects\ASP.NET CORE\FirstWebApp\FirstWebApp\obj\Debug\net8.0\FirstWebApp.pdb
 C:\Projects\ASP.NET CORE\FirstWebApp\FirstWebApp\obj\Debug\net8.0\FirstWebApp.genruntimeconfig.cache
 C:\Projects\ASP.NET CORE\FirstWebApp\FirstWebApp\obj\Debug\net8.0\ref\FirstWebApp.dll
+C:\Projects\ASP.NET CORE\FirstWebApp\FirstWebApp\bin\Debug\net8.0\Autofac.dll
+C:\Projects\ASP.NET CORE\FirstWebApp\FirstWebApp\bin\Debug\net8.0\Autofac.Extensions.DependencyInjection.dll
+C:\Projects\ASP.NET CORE\FirstWebApp\FirstWebApp\bin\Debug\net8.0\AutoMapper.dll
+C:\Projects\ASP.NET CORE\FirstWebApp\FirstWebApp\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
