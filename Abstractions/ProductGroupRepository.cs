@@ -2,6 +2,7 @@
 using FirstWebApp.Data;
 using FirstWebApp.Dto;
 using FirstWebApp.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace FirstWebApp.Abstractions
 {
@@ -9,11 +10,13 @@ namespace FirstWebApp.Abstractions
     {
         private readonly StorageContext _context;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _cache;
 
-        public ProductGroupRepository(StorageContext context, IMapper mapper)
+        public ProductGroupRepository(StorageContext context, IMapper mapper, IMemoryCache cache)
         {
             _context = context;
             _mapper = mapper;
+            _cache = cache;
         }
 
         public int AddProductGroup(ProductGroupDto group)
@@ -28,9 +31,20 @@ namespace FirstWebApp.Abstractions
             return entity.Id;
         }
 
-        public ProductGroupDto DeleteProductGroup(int id)
+        public ProductGroupDto DeleteProductGroup(string name)
         {
-            throw new NotImplementedException();
+            var group = _context.ProductGroups.FirstOrDefault(x => x.Name == name);
+
+            if (group == null)
+                throw new Exception("No group like this!");
+
+            var entity = _mapper.Map<ProductGroupDto>(group);
+
+            _context.Remove(group);
+            _context.SaveChanges();
+            _cache.Remove("groups");
+
+            return entity;
         }
 
         public List<ProductGroupDto> GetAllProductGroups()

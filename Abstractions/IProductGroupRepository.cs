@@ -6,6 +6,6 @@ namespace FirstWebApp.Abstractions
     {
         int AddProductGroup(ProductGroupDto group);
         List<ProductGroupDto> GetAllProductGroups();
-        ProductGroupDto DeleteProductGroup(int id);
+        ProductGroupDto DeleteProductGroup(string name);
     }
 }
