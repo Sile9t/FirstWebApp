@@ -28,20 +28,17 @@ namespace FirstWebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ProductGroup>> GetAllProductGroups()
+        public ActionResult<List<ProductGroupDto>> GetAllProductGroups()
         {
-            using (var context = new StorageContext())
+            try
             {
-                var list = context.ProductGroups.Select(x 
-                    => new ProductGroup { Id = x.Id, Name = x.Name, 
-                        Description = x.Description}).ToList();
-
-                return Ok(list);
+                return Ok(_repository.GetAllProductGroups());
             }
+            catch (Exception ex) { return StatusCode(409, ex.Message); }
         }
 
         [HttpDelete]
-        public ActionResult<ProductGroup> DeleteProductGroup(int id)
+        public ActionResult<ProductGroupDto> DeleteProductGroup(int id)
         {
             using (var context = new StorageContext())
             {
