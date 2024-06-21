@@ -27,7 +27,7 @@ namespace FirstWebApp.Controllers
             catch (Exception ex) { return StatusCode(409, ex.Message); }
         }
 
-        [HttpGet]
+        [HttpGet("get_all_product_groups")]
         public ActionResult<List<ProductGroupDto>> GetAllProductGroups()
         {
             try
@@ -37,7 +37,7 @@ namespace FirstWebApp.Controllers
             catch (Exception ex) { return StatusCode(409, ex.Message); }
         }
 
-        [HttpDelete]
+        [HttpDelete("delete_product_group")]
         public ActionResult<ProductGroupDto> DeleteProductGroup(string name)
         {
             try
