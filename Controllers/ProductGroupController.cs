@@ -38,20 +38,13 @@ namespace FirstWebApp.Controllers
         }
 
         [HttpDelete]
-        public ActionResult<ProductGroupDto> DeleteProductGroup(int id)
+        public ActionResult<ProductGroupDto> DeleteProductGroup(string name)
         {
-            using (var context = new StorageContext())
+            try
             {
-                var group = context.ProductGroups.FirstOrDefault(x => x.Id == id);
-
-                if (group == null)
-                    return StatusCode(409);
-
-                context.ProductGroups.Remove(group);
-                context.SaveChanges();
-
-                return Ok(group);
+                return Ok(_repository.DeleteProductGroup(name));
             }
+            catch (Exception ex) { return StatusCode(409, ex.Message); }
         }
     }
 }
