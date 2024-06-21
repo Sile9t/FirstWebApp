@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FirstWebApp.Abstractions;
 using FirstWebApp.Data;
 using FirstWebApp.Dto;
 using FirstWebApp.Models;

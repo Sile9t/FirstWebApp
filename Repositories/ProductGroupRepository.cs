@@ -4,7 +4,7 @@ using FirstWebApp.Dto;
 using FirstWebApp.Models;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace FirstWebApp.Abstractions
+namespace FirstWebApp.Repositories
 {
     public class ProductGroupRepository : IProductGroupRepository
     {

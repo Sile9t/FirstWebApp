@@ -1,6 +1,6 @@
 ﻿using FirstWebApp.Dto;
 
-namespace FirstWebApp.Abstractions
+namespace FirstWebApp.Repositories
 {
     public interface IProductGroupRepository
     {

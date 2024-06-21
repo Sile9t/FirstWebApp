@@ -1,7 +1,7 @@
-﻿using FirstWebApp.Abstractions;
-using FirstWebApp.Data;
+﻿using FirstWebApp.Data;
 using FirstWebApp.Dto;
 using FirstWebApp.Models;
+using FirstWebApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FirstWebApp.Controllers

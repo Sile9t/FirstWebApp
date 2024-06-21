@@ -1,7 +1,6 @@
 
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using FirstWebApp.Abstractions;
 using FirstWebApp.Data;
 using FirstWebApp.Mapper;
 using FirstWebApp.Repositories;
