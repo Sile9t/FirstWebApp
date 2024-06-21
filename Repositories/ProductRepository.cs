@@ -28,6 +28,7 @@ namespace FirstWebApp.Repositories
                 throw new Exception("Product is already exist!");
 
             var entity = _mapper.Map<Product>(product);
+
             _context.Add(entity);
             _context.SaveChanges();
             _cache.Remove("products");

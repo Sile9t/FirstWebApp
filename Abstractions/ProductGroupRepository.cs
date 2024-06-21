@@ -25,8 +25,10 @@ namespace FirstWebApp.Abstractions
                 throw new Exception("Group is already exist!");
 
             var entity = _mapper.Map<ProductGroup>(group);
+
             _context.Add(entity);
             _context.SaveChanges();
+            _cache.Remove("groups");
 
             return entity.Id;
         }
@@ -49,7 +51,12 @@ namespace FirstWebApp.Abstractions
 
         public List<ProductGroupDto> GetAllProductGroups()
         {
-            var list = _context.ProductGroups.Select(_mapper.Map<ProductGroupDto>).ToList();
+            if (_cache.TryGetValue("groups", out List<ProductGroupDto> list))
+                return list;
+
+            list = _context.ProductGroups.Select(_mapper.Map<ProductGroupDto>).ToList();
+
+            _cache.Set("groups", list, TimeSpan.FromMinutes(30));
 
             return list;
         }
