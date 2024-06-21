@@ -28,26 +28,32 @@ namespace FirstWebApp.Controllers
         }
 
         [HttpGet("get_all_products")]
-        public ActionResult<IEnumerable<Product>> GetAllProducts()
+        public ActionResult<IEnumerable<ProductDto>> GetAllProducts()
         {
             return Ok(_repository.GetAllProducts());
         }
 
         [HttpDelete("delete_product")]
-        public ActionResult<Product> DeleteProduct(int id)
+        public ActionResult<ProductDto> DeleteProduct(string name)
         {
-            using (var context = new StorageContext())
+            try
             {
-                var product = context.Products.FirstOrDefault(x => x.Id == id);
-
-                if (product == null) 
-                    return StatusCode(409);
-
-                context.Products.Remove(product);
-                context.SaveChanges();
-
-                return Ok(product);
+                return Ok(_repository.DeleteProduct(name));
             }
+            catch (Exception ex)
+            {
+                return StatusCode(409, ex.Message);
+            }
+        }
+
+        [HttpGet("get_all_products_report")]
+        public FileContentResult GetAllProductReport()
+        {
+            var content = _repository.GetCsv();
+            var file = File(new System.Text.UTF8Encoding().
+                GetBytes(content), "text/csv", "report.csv");
+
+            return file;
         }
     }
 }

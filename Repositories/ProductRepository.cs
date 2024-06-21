@@ -3,6 +3,9 @@ using FirstWebApp.Abstractions;
 using FirstWebApp.Data;
 using FirstWebApp.Dto;
 using FirstWebApp.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
+using System.Text;
 
 namespace FirstWebApp.Repositories
 {
@@ -10,35 +13,69 @@ namespace FirstWebApp.Repositories
     {
         private readonly StorageContext _context;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _cache;
 
-        public ProductRepository(StorageContext context, IMapper mapper)
+        public ProductRepository(StorageContext context, IMapper mapper, IMemoryCache cache)
         {
             _context = context;
             _mapper = mapper;
+            _cache = cache;
         }
 
         public int AddProduct(ProductDto product)
         {
             if (_context.Products.Any(x => x.Name == product.Name))
-                throw new Exception("Product is already axist!");
+                throw new Exception("Product is already exist!");
 
             var entity = _mapper.Map<Product>(product);
             _context.Add(entity);
             _context.SaveChanges();
+            _cache.Remove("products");
 
             return entity.Id;
         }
 
-        public ProductDto DeleteProduct(int id)
+        public ProductDto DeleteProduct(string name)
         {
-            throw new NotImplementedException();
+            var product = _context.Products.FirstOrDefault(x => x.Name == name);
+            if (product == null)
+                throw new Exception("Product not found!");
+
+            var entity = _mapper.Map<ProductDto>(product);
+
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+            _cache.Remove("products");
+
+            return entity;
         }
 
         public IEnumerable<ProductDto> GetAllProducts()
         {
-            var listDto = _context.Products.Select(_mapper.Map<ProductDto>).ToList();
+            if (_cache.TryGetValue("products", out List<ProductDto> listDto))
+                return listDto;
+
+            listDto = _context.Products.Select(_mapper.Map<ProductDto>).ToList();
+
+            _cache.Set("products", listDto, TimeSpan.FromMinutes(30));
 
             return listDto;
+        }
+
+        public string GetCsv()
+        {
+            var products = GetAllProducts();
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var p in products)
+            {
+                sb.Append("Name: " + p.Name);
+                sb.Append(", Price: " + p.Price);
+                sb.Append(", Descroption: " + p.Description + "\n");
+            }
+
+            return sb.ToString();
         }
     }
 }

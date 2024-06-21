@@ -1,4 +1,5 @@
 ﻿using FirstWebApp.Dto;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FirstWebApp.Abstractions
 {
@@ -6,6 +7,7 @@ namespace FirstWebApp.Abstractions
     {
         int AddProduct(ProductDto product);
         IEnumerable<ProductDto> GetAllProducts();
-        ProductDto DeleteProduct(int id);
+        ProductDto DeleteProduct(string name);
+        string GetCsv();
     }
 }

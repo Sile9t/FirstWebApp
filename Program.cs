@@ -21,14 +21,15 @@ namespace FirstWebApp
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(typeof(MapperProfile));
+            builder.Services.AddMemoryCache(x => x.TrackStatistics = true);
 
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(container =>
             {
                 container.RegisterType<ProductRepository>().As<IProductRepository>();
                 container.RegisterType<ProductGroupRepository>().As<IProductGroupRepository>();
-                container.Register(x => new StorageContext(builder.Configuration.GetConnectionString("db")))
-                    .InstancePerDependency();
+                container.Register(x => new StorageContext(builder.Configuration
+                    .GetConnectionString("db"))).InstancePerDependency();
             });
 
             var app = builder.Build();
