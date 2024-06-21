@@ -1,4 +1,6 @@
-﻿using FirstWebApp.Data;
+﻿using FirstWebApp.Abstractions;
+using FirstWebApp.Data;
+using FirstWebApp.Dto;
 using FirstWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,21 +10,21 @@ namespace FirstWebApp.Controllers
     [Route("[controller]")]
     public class ProductGroupController : ControllerBase
     {
-        [HttpPost]
-        public ActionResult AddProductGroup(string name, string description)
+        private readonly IProductGroupRepository _repository;
+
+        public ProductGroupController(IProductGroupRepository repository)
         {
-            using (var context = new StorageContext())
+            _repository = repository;
+        }
+
+        [HttpPost("add_product_group")]
+        public ActionResult<int> AddProductGroup(ProductGroupDto group)
+        {
+            try
             {
-                if (context.ProductGroups.Any(x => x.Name == name))
-                    return StatusCode(409);
-
-                var group = new ProductGroup { Name = name, Description = description };
-
-                context.ProductGroups.Add(group);
-                context.SaveChanges();
-
-                return Ok(group.Id);
+                return Ok(_repository.AddProductGroup(group));
             }
+            catch (Exception ex) { return StatusCode(409, ex.Message); }
         }
 
         [HttpGet]
